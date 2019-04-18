@@ -106,5 +106,24 @@ public class XSD2OWLTest {
             LOGGER.error("{}", e.getMessage());
         }
     }
+    @Test
+    public void materialsmineTest() {
 
+        // This part converts XML schema to OWL ontology.
+        XSD2OWLMapper mapping = new XSD2OWLMapper(new File("src/test/resources/test/PNC_schema_081218.xsd"));
+        mapping.setObjectPropPrefix("");
+        mapping.setDataTypePropPrefix("");
+        mapping.convertXSD2OWL();
+
+        // This part prints the ontology to the specified file.
+        try {
+            File f = new File("src/test/resources/output/PNC_schema_081218.owl");
+            f.getParentFile().mkdirs();
+            Writer w = new FileWriter(f);
+            mapping.writeOntology(w, "RDF/XML");
+            w.close();
+        } catch (Exception e) {
+            LOGGER.error("{}", e.getMessage());
+        }
+    }
 }
